@@ -1,0 +1,14 @@
+{
+  "name": "selenium-base",
+  "dockerComposeFile": [
+    "../docker-compose.yml"
+  ],
+  "service": "pytest",
+  "workspaceFolder": "/docker-pytest",
+  "extensions": [
+	"ms-python.python",
+	"njpwerner.autodocstring",
+	"ms-python.vscode-pylance"
+],
+  "shutdownAction": "none" // or "stopCompose"
+}

@@ -1,0 +1,34 @@
+version: "3"
+
+services:
+  chrome:
+    image: selenium/standalone-chrome:4.0.0-beta-1-prerelease-20201208
+    container_name: chrome
+    volumes:
+      - /dev/shm:/dev/shm
+      - ./results:/docker-pytest/results:z
+    ports:
+      - 4444:4444
+      - 5900:5900
+
+  pytest:
+    build:
+      context: ./
+      dockerfile: ./pytest/Dockerfile
+    container_name: pytest
+    volumes:
+      - ./results:/docker-pytest/results/
+      - ./pytest/tests:/docker-pytest/tests/
+      - ./pytest/env:/docker-pytest/env/
+      - ./pytest/scripts:/docker-pytest/scripts/
+      - ./.devcontainer/.vscode:/docker-pytest/.vscode/
+    tty: true
+  
+  compare:
+    image: lifullsetg/gazo-san
+    container_name: compare
+    volumes:
+      - ./results:/docker-compare/results/
+      - ./gazosan:/docker-compare/gazosan/
+    working_dir: /docker-compare/gazosan/
+    tty: true
